@@ -1,18 +1,19 @@
 import React from 'react';
-import { Box, Container } from '@mui/material';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
+import './App.css';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <Layout>
-      <Box sx={{ py: 4 }}>
-        <Container maxWidth="lg">
-          <Dashboard />
-        </Container>
-      </Box>
-    </Layout>
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+        </Routes>
+      </Layout>
+    </Router>
   );
-}
+};
 
 export default App;
