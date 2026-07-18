@@ -1,43 +1,16 @@
-import express, { Router } from 'express';
-const router: Router = express.Router();
+import express from 'express';
+import { financeController } from '../controllers/financeController';
 
-// Income endpoints
-router.get('/income', (req, res) => {
-  res.json({ message: 'Get all income records - To be implemented' });
-});
+const router = express.Router();
 
-router.post('/income', (req, res) => {
-  res.json({ message: 'Create income record - To be implemented' });
-});
+router.get('/income', financeController.getIncome);
+router.post('/income', financeController.createIncome);
+router.put('/income/:id', financeController.updateIncome);
+router.delete('/income/:id', financeController.deleteIncome);
 
-router.put('/income/:id', (req, res) => {
-  res.json({ message: 'Update income record - To be implemented' });
-});
+router.get('/expense', financeController.getExpenses);
+router.post('/expense', financeController.createExpense);
+router.put('/expense/:id', financeController.updateExpense);
+router.delete('/expense/:id', financeController.deleteExpense);
 
-router.delete('/income/:id', (req, res) => {
-  res.json({ message: 'Delete income record - To be implemented' });
-});
-
-// Expense endpoints
-router.get('/expense', (req, res) => {
-  res.json({ message: 'Get all expense records - To be implemented' });
-});
-
-router.post('/expense', (req, res) => {
-  res.json({ message: 'Create expense record - To be implemented' });
-});
-
-router.put('/expense/:id', (req, res) => {
-  res.json({ message: 'Update expense record - To be implemented' });
-});
-
-router.delete('/expense/:id', (req, res) => {
-  res.json({ message: 'Delete expense record - To be implemented' });
-});
-
-// Finance summary endpoint
-router.get('/summary', (req, res) => {
-  res.json({ message: 'Get finance summary - To be implemented' });
-});
-
-module.exports = router;
+export default router;

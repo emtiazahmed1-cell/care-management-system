@@ -1,21 +1,35 @@
-import express, { Router } from 'express';
-const router: Router = express.Router();
+import express from 'express';
+import multer from 'multer';
+import path from 'path';
+import { documentController } from '../controllers/documentController';
 
-// Document endpoints
-router.get('/', (req, res) => {
-  res.json({ message: 'Get all documents - To be implemented' });
+const router = express.Router();
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+  },
 });
 
-router.post('/upload', (req, res) => {
-  res.json({ message: 'Upload document - To be implemented' });
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+  fileFilter: (req, file, cb) => {
+    const allowedMimes = ['application/pdf', 'image/jpeg', 'image/png', 'application/msword'];
+    if (allowedMimes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type'));
+    }
+  },
 });
 
-router.get('/:id', (req, res) => {
-  res.json({ message: 'Download document - To be implemented' });
-});
+router.post('/upload', upload.single('file'), documentController.upload);
+router.get('/', documentController.getByEntity);
+router.delete('/:id', documentController.delete);
 
-router.delete('/:id', (req, res) => {
-  res.json({ message: 'Delete document - To be implemented' });
-});
-
-module.exports = router;
+export default router;

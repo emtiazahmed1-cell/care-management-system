@@ -1,54 +1,50 @@
-import { v4 as uuidv4 } from 'uuid';
-
-/**
- * Generate Client ID with format: NCFLCL2026000001
- * - NCFL = Organization prefix
- * - CL = Client
- * - 2026 = Current year
- * - 000001 = Sequential number
- */
 export class IDGenerator {
   private static readonly CLIENT_PREFIX = 'NCFLCL';
   private static readonly CAREGIVER_PREFIX = 'NCFLCG';
   private static readonly EMPLOYEE_PREFIX = 'NCFLEM';
 
-  static generateClientID(sequenceNumber: number): string {
+  static generateClientID(sequence: number): string {
     const year = new Date().getFullYear();
-    const sequence = String(sequenceNumber).padStart(6, '0');
-    return `${this.CLIENT_PREFIX}${year}${sequence}`;
+    return `${this.CLIENT_PREFIX}${year}${String(sequence).padStart(6, '0')}`;
   }
 
-  static generateCaregiverID(sequenceNumber: number): string {
+  static generateCaregiverID(sequence: number): string {
     const year = new Date().getFullYear();
-    const sequence = String(sequenceNumber).padStart(6, '0');
-    return `${this.CAREGIVER_PREFIX}${year}${sequence}`;
+    return `${this.CAREGIVER_PREFIX}${year}${String(sequence).padStart(6, '0')}`;
   }
 
-  static generateEmployeeID(sequenceNumber: number): string {
+  static generateEmployeeID(sequence: number): string {
     const year = new Date().getFullYear();
-    const sequence = String(sequenceNumber).padStart(6, '0');
-    return `${this.EMPLOYEE_PREFIX}${year}${sequence}`;
+    return `${this.EMPLOYEE_PREFIX}${year}${String(sequence).padStart(6, '0')}`;
   }
 
-  static generateUUID(): string {
-    return uuidv4();
+  static parseID(id: string) {
+    const match = id.match(/(NCFL[A-Z]{2})(\d{4})(\d{6})/);
+    if (match) {
+      return {
+        prefix: match[1],
+        year: parseInt(match[2], 10),
+        sequence: parseInt(match[3], 10),
+      };
+    }
+    return null;
   }
 
-  /**
-   * Extract sequence number from ID
-   * Example: NCFLCL2026000001 -> 1
-   */
-  static extractSequenceFromID(id: string): number {
+  static extractSequence(id: string): number {
     const match = id.match(/(\d{6})$/);
     return match ? parseInt(match[1], 10) : 0;
   }
 
-  /**
-   * Extract year from ID
-   * Example: NCFLCL2026000001 -> 2026
-   */
-  static extractYearFromID(id: string): number {
+  static extractYear(id: string): number {
     const match = id.match(/(\d{4})\d{6}$/);
     return match ? parseInt(match[1], 10) : new Date().getFullYear();
+  }
+
+  static formatIDDisplay(id: string): string {
+    const parsed = this.parseID(id);
+    if (parsed) {
+      return `${parsed.prefix}-${parsed.year}-${String(parsed.sequence).padStart(6, '0')}`;
+    }
+    return id;
   }
 }
