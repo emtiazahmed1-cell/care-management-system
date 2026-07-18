@@ -1,207 +1,233 @@
 # Care Management System
 
-A comprehensive dashboard application for managing Clients, Caregivers, Employees, Finance, and Reporting.
+A comprehensive care management system built with React, Express, and PostgreSQL for managing clients, caregivers, employees, and financial records.
+
+## Features
+
+- **Client Management**: Track client information, documents, and care records
+- **Caregiver Management**: Manage caregiver profiles and assignments
+- **Employee Management**: Maintain employee records and information
+- **Financial Management**: Track income and expenses with categorization
+- **Document Management**: Upload and organize documents for entities
+- **Dashboard**: Overview of all system metrics and data
 
 ## Tech Stack
 
-- **Frontend**: React 18 + TypeScript + Material-UI (MUI)
-- **State Management**: Redux Toolkit
-- **Backend**: Node.js + Express.js + TypeScript
-- **Database**: PostgreSQL
-- **Authentication**: JWT
-- **File Upload**: Multer
-- **Report Generation**: ExcelJS
-- **API Documentation**: Swagger/OpenAPI
+### Frontend
+- React 18 with TypeScript
+- Material-UI (MUI) for components
+- React Router for navigation
+- Axios for API calls
+
+### Backend
+- Express.js with TypeScript
+- PostgreSQL for database
+- Multer for file uploads
+- CORS enabled for cross-origin requests
 
 ## Project Structure
 
 ```
 care-management-system/
-├── frontend/                    # React frontend application
+├── frontend/
 │   ├── src/
-│   │   ├── components/         # Reusable components
-│   │   ├── pages/              # Page components
-│   │   ├── redux/              # Redux store, slices, selectors
-│   │   ├── services/           # API services
-│   │   ├── hooks/              # Custom React hooks
-│   │   ├── types/              # TypeScript types
-│   │   ├── utils/              # Utility functions
-│   │   ├── styles/             # Global styles
+│   │   ├── components/
+│   │   │   └── Layout.tsx
+│   │   ├── pages/
+│   │   │   └── Dashboard.tsx
+│   │   ├── types/
+│   │   │   └── index.ts
+│   │   ├── utils/
+│   │   │   ├── idGenerator.ts
+│   │   │   ├── formatters.ts
+│   │   │   └── validators.ts
 │   │   ├── App.tsx
 │   │   └── index.tsx
-│   ├── public/
 │   ├── package.json
 │   └── tsconfig.json
 │
-├── backend/                     # Node.js backend application
+├── backend/
 │   ├── src/
-│   │   ├── models/             # Database models/schemas
-│   │   ├── routes/             # API routes
-│   │   ├── controllers/        # Route controllers
-│   │   ├── middleware/         # Express middleware
-│   │   ├── services/           # Business logic
-│   │   ├── utils/              # Utility functions
-│   │   ├── validators/         # Input validation
-│   │   ├── config/             # Configuration files
-│   │   ├── uploads/            # Uploaded files storage
-│   │   ├── types/              # TypeScript types
+│   │   ├── controllers/
+│   │   │   ├── clientController.ts
+│   │   │   ├── caregiverController.ts
+│   │   │   ├── employeeController.ts
+│   │   │   ├── financeController.ts
+│   │   │   └── documentController.ts
+│   │   ├── routes/
+│   │   │   ├── clientRoutes.ts
+│   │   │   ├── caregiverRoutes.ts
+│   │   │   ├── employeeRoutes.ts
+│   │   │   ├── financeRoutes.ts
+│   │   │   └── documentRoutes.ts
+│   │   ├── models/
+│   │   │   └── index.ts
+│   │   ├── config/
+│   │   │   └── database.ts
+│   │   ├── utils/
+│   │   │   ├── idGenerator.ts
+│   │   │   └── validators.ts
 │   │   └── server.ts
-│   ├── migrations/             # Database migrations
-│   ├── seeds/                  # Database seeders
-│   ├── .env.example
 │   ├── package.json
-│   └── tsconfig.json
+│   ├── tsconfig.json
+│   └── .env.example
 │
-├── database/                    # Database scripts
-│   ├── schema.sql              # Full database schema
-│   └── migrations/
-│
-├── docker-compose.yml          # Docker configuration
-├── .gitignore
 └── README.md
 ```
 
-## Features
-
-### Client Register
-- Demographics & Emergency Contacts
-- Physician Contacts
-- Home Environment & Safety
-- Services
-- Personal Preferences
-- Allergies & Dietary Restrictions
-- Client Schedule
-- Payment Information
-- Billing History
-- Documents with file upload
-- Custom fields support
-
-### Caregiver Register
-- Demographics & Emergency Contacts
-- Identity & Employment Eligibility
-- Background & Safety Screening
-- Qualifications & Training (multiple records)
-- Employment Record (multiple records)
-- Education Record (multiple records)
-- Onboarding & Payroll
-- Caregiver Service Skills
-- Caregiver Schedule (weekly availability)
-- Time Sheet (weekly calculation)
-- Documents with file upload
-- Custom fields support
-
-### Employee Register
-- Demographics & Emergency Contacts
-- Identity & Employment Eligibility
-- Background & Safety Screening
-- Qualifications & Training (multiple records)
-- Employment Record (multiple records)
-- Education Record (multiple records)
-- Onboarding & Payroll
-- Compensation & Benefits
-- Time Sheet
-- Documents with file upload
-- Custom fields support
-
-### Finance Tab
-- Income tracking with categories
-- Expense tracking with categories
-- Sortable and filterable tables
-- Financial dashboard
-
-### Reporting Tab
-- Client Reports with Excel export
-- Caregiver Reports with Excel export
-- Employee Reports with Excel export
-- Financial Reports with Excel export
-- Multi-select report types
-- Date range filtering
-
-## Getting Started
+## Installation
 
 ### Prerequisites
-
-- Node.js (v16+)
-- PostgreSQL (v12+)
+- Node.js (v16 or higher)
+- PostgreSQL (v12 or higher)
 - npm or yarn
 
 ### Backend Setup
 
+1. Navigate to the backend directory:
 ```bash
 cd backend
+```
+
+2. Install dependencies:
+```bash
 npm install
+```
+
+3. Create a `.env` file based on `.env.example` and configure your database credentials:
+```bash
 cp .env.example .env
-# Update .env with your database credentials
-npm run migrate
-npm run seed
+```
+
+4. Create the PostgreSQL database and tables (SQL migration scripts needed)
+
+5. Start the development server:
+```bash
 npm run dev
 ```
 
+The backend will run on `http://localhost:3001`
+
 ### Frontend Setup
 
+1. Navigate to the frontend directory:
 ```bash
 cd frontend
+```
+
+2. Install dependencies:
+```bash
 npm install
+```
+
+3. Create a `.env` file based on `.env.example`:
+```bash
+cp .env.example .env
+```
+
+4. Start the development server:
+```bash
 npm start
 ```
 
-### Database Setup
-
-```bash
-# Start PostgreSQL with Docker
-docker-compose up -d postgres
-
-# Run migrations
-cd backend
-npm run migrate
-```
-
-## Environment Variables
-
-See `.env.example` in both frontend and backend directories.
+The frontend will run on `http://localhost:3000`
 
 ## API Endpoints
 
 ### Clients
-- `GET /api/clients` - List all clients
-- `POST /api/clients` - Create new client
-- `GET /api/clients/:id` - Get client details
-- `PUT /api/clients/:id` - Update client
-- `DELETE /api/clients/:id` - Delete client
+- `GET /api/clients` - Get all clients
+- `GET /api/clients/:id` - Get a specific client
+- `POST /api/clients` - Create a new client
+- `PUT /api/clients/:id` - Update a client
+- `DELETE /api/clients/:id` - Delete a client
 
 ### Caregivers
-- `GET /api/caregivers` - List all caregivers
-- `POST /api/caregivers` - Create new caregiver
-- `GET /api/caregivers/:id` - Get caregiver details
-- `PUT /api/caregivers/:id` - Update caregiver
-- `DELETE /api/caregivers/:id` - Delete caregiver
+- `GET /api/caregivers` - Get all caregivers
+- `GET /api/caregivers/:id` - Get a specific caregiver
+- `POST /api/caregivers` - Create a new caregiver
+- `PUT /api/caregivers/:id` - Update a caregiver
+- `DELETE /api/caregivers/:id` - Delete a caregiver
 
 ### Employees
-- `GET /api/employees` - List all employees
-- `POST /api/employees` - Create new employee
-- `GET /api/employees/:id` - Get employee details
-- `PUT /api/employees/:id` - Update employee
-- `DELETE /api/employees/:id` - Delete employee
+- `GET /api/employees` - Get all employees
+- `GET /api/employees/:id` - Get a specific employee
+- `POST /api/employees` - Create a new employee
+- `PUT /api/employees/:id` - Update an employee
+- `DELETE /api/employees/:id` - Delete an employee
 
 ### Finance
-- `GET /api/finance/income` - List income records
-- `POST /api/finance/income` - Add income
-- `GET /api/finance/expense` - List expense records
-- `POST /api/finance/expense` - Add expense
+- `GET /api/finance/income` - Get all income records
+- `POST /api/finance/income` - Create income record
+- `PUT /api/finance/income/:id` - Update income record
+- `DELETE /api/finance/income/:id` - Delete income record
+- `GET /api/finance/expense` - Get all expense records
+- `POST /api/finance/expense` - Create expense record
+- `PUT /api/finance/expense/:id` - Update expense record
+- `DELETE /api/finance/expense/:id` - Delete expense record
 
-### Reports
-- `POST /api/reports/client` - Generate client report
-- `POST /api/reports/caregiver` - Generate caregiver report
-- `POST /api/reports/employee` - Generate employee report
-- `POST /api/reports/finance` - Generate financial report
+### Documents
+- `POST /api/documents/upload` - Upload a document
+- `GET /api/documents` - Get documents for an entity
+- `DELETE /api/documents/:id` - Delete a document
+
+## ID Generation
+
+The system uses a custom ID generation format:
+- **Clients**: `NCFLCL` + Year + Sequence (e.g., `NCFLCL2026000001`)
+- **Caregivers**: `NCFLCG` + Year + Sequence (e.g., `NCFLCG2026000001`)
+- **Employees**: `NCFLEM` + Year + Sequence (e.g., `NCFLEM2026000001`)
 
 ## File Upload
 
-Documents can be uploaded to any register (Client, Caregiver, Employee):
-- `POST /api/documents/upload` - Upload document
-- `GET /api/documents/:id` - Download document
-- `DELETE /api/documents/:id` - Delete document
+Supported file types:
+- PDF documents
+- Images (JPEG, PNG)
+- Word documents (DOC)
+
+Maximum file size: 10MB
+
+## Database Schema
+
+The system requires the following tables:
+- `clients`
+- `caregivers`
+- `employees`
+- `income_records`
+- `expense_records`
+- `documents`
+
+Sequences needed:
+- `client_id_seq`
+- `caregiver_id_seq`
+- `employee_id_seq`
+
+## Deployment
+
+### Building for Production
+
+**Backend:**
+```bash
+cd backend
+npm run build
+npm start
+```
+
+**Frontend:**
+```bash
+cd frontend
+npm run build
+```
+
+## Contributing
+
+1. Create a feature branch
+2. Make your changes
+3. Submit a pull request
 
 ## License
 
-Proprietary - All Rights Reserved
+MIT License
+
+## Support
+
+For support, contact the development team or create an issue in the repository.
